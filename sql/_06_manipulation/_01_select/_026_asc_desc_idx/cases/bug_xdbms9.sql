@@ -1,7 +1,5 @@
---Test select on class with asc/desc index
 create class xoo ( a int, b char(5), c varchar(5));
 create index idx1 on xoo(a desc, b asc, c desc);
-
 insert into xoo values(1, '9','8');
 insert into xoo values(4, '8','8');
 insert into xoo values(3, '7','8');
@@ -17,7 +15,7 @@ insert into xoo values(5, '5','0');
 insert into xoo values(6, '8','8');
 insert into xoo values(8, '9','3');
 insert into xoo values(8, '9','2');
-
-select x.a, y.a from xoo y, xoo x where y.a > 4 and x.a > 4 and x.a = y.a order by 1;
-
+WITH cte as (
+select x.a, y.a from xoo y, xoo x where y.a > 4 and x.a > 4 and x.a = y.a order by 1)
+SELECT * FROM cte;
 drop class xoo;

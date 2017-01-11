@@ -1,4 +1,3 @@
---Create common index with keyword asc/desc and datatype date, time, timestamp and constraint unique
 create class ddl_0001( col1 date unique, col2 time unique, col3 date unique, col4 timestamp unique, col5 timestamp unique);
 insert into ddl_0001 values(date '08/08/2009', time '10:18', date '08/08/2008', timestamp '08/08/2008 10:18:00',timestamp '08/08/2008 10:18:00');
 insert into ddl_0001 values(date '08/08/2008', time '10:17', date '08/02/2008', timestamp '08/08/2008 10:18:03',timestamp '08/08/2008 10:18:10');
@@ -18,9 +17,15 @@ create index ddl_0001_idx7 on ddl_0001(col3 desc, col2 asc, col1 asc);
 create index ddl_0001_idx8 on ddl_0001(col4 desc, col1 asc, col3 desc);
 create index ddl_0001_idx9 on ddl_0001(col1 asc, col5 desc, col4 asc);
 create index ddl_0001_idx10 on ddl_0001(col3 desc, col2 asc, col1 desc);
-select * from db_index where class_name='ddl_0001' order by 1,2,3;
-select * from db_index_key where class_name='ddl_0001' order by 1,2,3;
-select * from ddl_0001 where col1 < '' order by 1,2,3;
+WITH cte as (
+select * from db_index where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from db_index_key where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from ddl_0001 where col1 < '' order by 1,2,3)
+SELECT * FROM cte;
 update ddl_0001 set col1 = sysdate where rownum = 1;
 delete from ddl_0001;
 drop class ddl_0001;

@@ -1,4 +1,3 @@
---Create common index with keyword asc/desc , constraint foreigh key and datatype: numeric, decimal,integer, samllint 
 create class ddl_0001(col1 numeric(10), col2 decimal, col3 integer, col4 smallint, col5 numeric(5,4),primary key(col1, col2,col3, col4, col5));
 insert into ddl_0001  values(101,101,10001,11,1.0001);
 insert into ddl_0001  values(102,102,10002,12,1.0002);
@@ -31,7 +30,9 @@ create index dd_0002_idx8 on ddl_0002(col5 desc,col4 asc);
 create index dd_0002_idx9 on ddl_0002(col3 desc, col2 asc);
 create index dd_0002_idx10 on ddl_0002(col4 asc, col1 desc);
 create index dd_0002_idx11 on ddl_0002(col1 desc, col2 asc, col3 desc, col4 asc, col5 desc);
-select * from db_index where class_name like 'ddl_000%' order by 1,2,3;
+WITH cte as (
+select * from db_index where class_name like 'ddl_000%' order by 1,2,3)
+SELECT * FROM cte;
 delete from ddl_0002;
 drop class ddl_0002;
 drop class ddl_0001;

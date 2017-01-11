@@ -1,4 +1,3 @@
---Create common index with keyword asc/desc ,datatype: decimal,integer,smallint and unique contraint
 create class ddl_0001 ( col1 decimal(6,5) unique, col2 integer unique, col3 smallint unique, col4 decimal(8,7)unique, col5 integer unique);
 insert into ddl_0001 values(1.0011, 1001, 101, 1.00011, 1001);
 insert into ddl_0001 values(1.0021, 1002, 102, 1.00021, 1002);
@@ -20,9 +19,15 @@ create index ddl_0001_idx7 on ddl_0001(col3 desc, col4 asc, col5 desc);
 create index ddl_0001_idx8 on ddl_0001(col1 desc, col2 asc, col4 desc);
 create index ddl_0001_idx9 on ddl_0001(col5 desc, col3 asc, col1 desc);
 create index ddl_0001_idx10 on ddl_0001(col5 desc, col2 asc, col4 desc);
-select * from db_index where class_name='ddl_0001' order by 1,2,3;
-select * from db_index_key where class_name='ddl_0001' order by 1,2,3;
-select * from ddl_0001 where col1 < 1.005 using index u_ddl_0001_col1(+) order by 1,2,3;
+WITH cte as (
+select * from db_index where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from db_index_key where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from ddl_0001 where col1 < 1.005 using index u_ddl_0001_col1(+) order by 1,2,3)
+SELECT * FROM cte;
 delete from ddl_0001 where col2 = 1002;
 update ddl_0001 set col1=1.001 where col2=1009;
 drop class ddl_0001;

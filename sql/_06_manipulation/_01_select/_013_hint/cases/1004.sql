@@ -1,24 +1,20 @@
---test hint using ORDERED
 create class tb1(
 	id int auto_increment primary key,
 	name varchar(10)
 );
-
 create class tb2(
 	id int auto_increment primary key,
 	address varchar(10)
 );
-
 insert into tb1 (name) values('aaa');
 insert into tb1 (name) values('bbb');
 insert into tb2 (address) values('beijing');
 insert into tb2 (address) values('shanghai');
-
-SELECT /*+ ORDERED */
+WITH cte as (
+SELECT 
      a.id, a.name, b.address 
 FROM tb1 a, tb2 b 
-WHERE a.id = b.id;
- 
+WHERE a.id = b.id)
+SELECT * FROM cte;
 drop table tb1;
 drop table tb2;
-

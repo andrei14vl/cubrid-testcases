@@ -1,4 +1,3 @@
---Create common index with keyword asc/desc , constraint foreigh key and datatype:date, time, timestamp 
 create class ddl_0001(col1 date, col2 time, col3 date, col4 timestamp, col5 timestamp,primary key(col1, col2,col3, col4, col5));
 insert into ddl_0001 values(date '08/08/2009', time '10:18', date '08/08/2008', timestamp '08/08/2008 10:18:00',timestamp '08/08/2008 10:18:00');
 insert into ddl_0001 values(date '08/08/2008', time '10:17', date '08/02/2008', timestamp '08/08/2008 10:18:03',timestamp '08/08/2008 10:18:10');
@@ -27,8 +26,12 @@ create index dd_0002_idx8 on ddl_0002(col5 desc,col4 asc);
 create index dd_0002_idx9 on ddl_0002(col3 desc, col2 asc);
 create index dd_0002_idx10 on ddl_0002(col4 asc, col1 desc);
 create index dd_0002_idx11 on ddl_0002(col1 desc, col2 asc, col3 desc, col4 asc, col5 desc);
-select * from db_index where class_name like 'ddl_000%' order by 1;
-select * from db_index_key where class_name like 'ddl_00%' order by 1,2,3;
+WITH cte as (
+select * from db_index where class_name like 'ddl_000%' order by 1)
+SELECT * FROM cte;
+WITH cte as (
+select * from db_index_key where class_name like 'ddl_00%' order by 1,2,3)
+SELECT * FROM cte;
 delete from ddl_0002;
 drop class ddl_0002;
 drop class ddl_0001;
