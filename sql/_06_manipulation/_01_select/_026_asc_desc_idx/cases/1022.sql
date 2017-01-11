@@ -1,4 +1,3 @@
---Create unique indew with keyword asc/desc and datatype float, real, double and monetary
 create class ddl_0001( col1 float(5), col2 real(6), col3 double, col4 monetary , col5 double );
 insert into ddl_0001 values(1001.1, 1001, 10001.1, 1001,10001);
 insert into ddl_0001 values(1002.1, 1002, 10002.1, 1002,10002);
@@ -20,9 +19,15 @@ create unique index ddl_0001_idx7 on ddl_0001(col4 desc, col5 asc, col1 asc);
 create unique index ddl_0001_idx8 on ddl_0001(col1 desc, col2 asc, col4 desc);
 create unique index ddl_0001_idx9 on ddl_0001(col3 desc ,col5 asc, col5 desc);
 create unique index ddl_0001_idx10 on ddl_0001(col2 asc, col4 desc, col1 desc);
-select * from db_index where class_name='ddl_0001' order by 1,2,3;
-select * from db_index_key where class_name='ddl_0001' order by 1,2,3;
-select * from ddl_0001 where col1 < 1005 order by 1,2,3;
+WITH cte as (
+select * from db_index where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from db_index_key where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from ddl_0001 where col1 < 1005 order by 1,2,3)
+SELECT * FROM cte;
 update ddl_0001 set col2 = 1010 where col2=1001;
 delete from ddl_0001;
 drop class ddl_0001;

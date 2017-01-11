@@ -1,4 +1,3 @@
---Create common index with keyword asc/desc ,char,varchar datatype and unique constraint
 create class ddl_0001(col1 char(10) unique, col2 varchar(20) unique, col3 varchar(4096) unique , col4 char(1024) unique, col5 char(1)unique );
 insert into ddl_0001 values('1001','1001','2041','100001','1');
 insert into ddl_0001 values('1002','1002','2042','100002','2');
@@ -18,9 +17,15 @@ create index ddl_0001_idx3 on ddl_0001(col1 asc, col2 desc,col5 desc);
 create index ddl_0001_idx4 on ddl_0001(col1 asc, col2 desc, col3 asc);
 create index ddl_0001_idx5 on ddl_0001(col1 asc,col2 desc, col3 desc, col4 asc);
 create index ddl_0001_idx6 on ddl_0001(col1 asc, col2 desc, col3 asc, col4 desc, col5 asc);
-select * from db_index where class_name='ddl_0001' order by 1,2,3;
-select * from db_index_key where class_name='ddl_0001' order by 1,2,3;
-select * from ddl_0001 where col1 like '1004' order by 1,2,3;
+WITH cte as (
+select * from db_index where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from db_index_key where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from ddl_0001 where col1 like '1004' order by 1,2,3)
+SELECT * FROM cte;
 delete from ddl_0001 where col1='1008';
 update ddl_0001 set col1='2050' where col1='1001';
 drop class ddl_0001;

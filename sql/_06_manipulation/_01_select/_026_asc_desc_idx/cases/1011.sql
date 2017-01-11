@@ -1,4 +1,3 @@
---Create reverse index with keyword asc/desc and datatype date, time, timestamp
 create class ddl_0001( col1 date , col2 time , col3 date , col4 timestamp , col5 timestamp );
 insert into ddl_0001 values(date '08/08/2008', time '10:18', date '08/08/2008', timestamp '08/08/2008 10:18:00',timestamp '08/08/2008 10:18:00');
 insert into ddl_0001 values(date '08/08/2008', time '10:18', date '08/08/2008', timestamp '08/08/2008 10:18:00',timestamp '08/08/2008 10:18:00');
@@ -17,9 +16,15 @@ create reverse index ddl_0001_idx6 on ddl_0001(col5 desc, col4 asc, col1 desc);
 create reverse index ddl_0001_idx7 on ddl_0001(col3 desc, col2 asc, col1 asc);
 create reverse index ddl_0001_idx8 on ddl_0001(col4 desc, col1 asc, col3 desc);
 create reverse index ddl_0001_idx9 on ddl_0001(col1 asc, col5 desc, col4 asc);
-select * from db_index where class_name='ddl_0001' order by 1,2,3;
-select * from db_index_key where class_name='ddl_0001' order by 1,2,3;
-select * from ddl_0001 where col1 <> '08/08/2008' order by 1,2,3;
+WITH cte as (
+select * from db_index where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from db_index_key where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from ddl_0001 where col1 <> '08/08/2008' order by 1,2,3)
+SELECT * FROM cte;
 update ddl_0001 set col1 = sysdate;
 delete from ddl_0001;
 drop class ddl_0001;

@@ -1,4 +1,3 @@
---Create index with keyword asc/desc on super class and subclass
 create class ddl_0001(col1 int, col2 varchar(10), col3 date, col4 time, col5 monetary, col6 char(10));
 insert into ddl_0001 values(101, '101', date '08/08/2008', time '10:18',10001,'100001');
 insert into ddl_0001 values(102, '101', date '08/08/2008', time '10:18',10001,'100001');
@@ -57,8 +56,12 @@ create index ddl_0002_idx18 on ddl_0002(col9 asc);
 create index ddl_0002_idx16 on ddl_0002(col7 asc);
 create index ddl_0002_idx25 on ddl_0002(col8 asc,col9 asc);
 create index ddl_0002_idx35 on ddl_0002(col9 desc, col6 asc);
-select * from db_index where class_name like 'ddl_00%' order by 1,2,3;
-select * from db_index where class_name like 'ddl_00%' order by 1,2,3;
+WITH cte as (
+select * from db_index where class_name like 'ddl_00%' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from db_index where class_name like 'ddl_00%' order by 1,2,3)
+SELECT * FROM cte;
 update ddl_0002 set col1=102;
 delete from ddl_0002;
 drop class ddl_0001;

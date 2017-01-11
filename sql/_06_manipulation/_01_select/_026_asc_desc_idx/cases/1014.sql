@@ -1,4 +1,3 @@
---Test index with asc/desc keyword ,datatype:char, varchar, nchar, numeric and unique constraint
 create class ddl_0001(col1 int unique, col2 string unique, col3 char(10) unique, col4 varchar(10) unique);
 insert into ddl_0001  values(101,'101','10001','1000001');
 insert into ddl_0001  values(102,'102','10002','1000002');
@@ -12,12 +11,18 @@ insert into ddl_0001  values(109,'109','10009','1000009');
 create index ddl_0001_idx0 on ddl_0001(col1 asc, col2 desc);
 create index ddl_0001_idx1 on ddl_0001(col1 desc, col4 asc);
 create index ddl_0001_idx2 on ddl_0001(col2 asc, col3 desc);
-create index ddl_0001_idx3 on ddl_0001(col3 desc, col4 asc); 
+create index ddl_0001_idx3 on ddl_0001(col3 desc, col4 asc);
 create index ddl_0001_idx4 on ddl_0001(col4 desc, col2 asc);
 create index ddl_0001_idx5 on ddl_0001(col1 asc,col2 desc, col3 desc, col4 asc);
-select * from db_index where class_name='ddl_0001' order by 1,2,3;
-select * from db_index_key where class_name='ddl_0001' order by 1,2,3;
-select * from ddl_0001 where col1 < 104 order by 1,2,3;
+WITH cte as (
+select * from db_index where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from db_index_key where class_name='ddl_0001' order by 1,2,3)
+SELECT * FROM cte;
+WITH cte as (
+select * from ddl_0001 where col1 < 104 order by 1,2,3)
+SELECT * FROM cte;
 delete from ddl_0001 where col1=101;
 update ddl_0001 set col1=1000 where col1=102;
 drop class ddl_0001;
